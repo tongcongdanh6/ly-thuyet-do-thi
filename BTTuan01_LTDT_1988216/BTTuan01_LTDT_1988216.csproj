@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="AdjacencyMatrix.cs" />
     <Compile Include="Cau1.cs" />
+    <Compile Include="Cau2.cs" />
     <Compile Include="FileHandler.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

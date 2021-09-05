@@ -250,5 +250,60 @@ namespace BTTuan01_LTDT_1988216
             }
             return resStr;
         }
+
+        public bool IsCompleteGraph()
+        {
+            if(isUndirectedGraph() && GetNumOfLoopEdge() == 0 && GetNumOfCoupleOfVertexHaveMultipleEdge() == 0)
+            {
+                // Mỗi đỉnh sẽ có bậc là n - 1
+                int[] degrees = GetDegreesOfUndirectedGraph();
+
+                int min = degrees.Min();
+                int max = degrees.Max();
+
+                if(min == max && min == n-1)
+                {
+                    return true;
+                }
+
+            }
+
+            return false;
+        }
+
+        public bool IsRegularGraph()
+        {
+            if (isUndirectedGraph() && GetNumOfLoopEdge() == 0 && GetNumOfCoupleOfVertexHaveMultipleEdge() == 0)
+            {
+                // Mọi đỉnh sẽ có bậc bằng nhau là k
+                int[] degrees = GetDegreesOfUndirectedGraph();
+
+                int min = degrees.Min();
+                int max = degrees.Max();
+
+                // Nếu min của mảng degrees khác với max của mảng degrees thì đồng nghĩa
+                // đã tồn tại 1 đinh không có bậc cùng với các đỉnh còn lại
+                if (min == max) return true;
+            }
+            return false;
+        }
+
+        public bool IsCircleGraph()
+        {
+            if (isUndirectedGraph() && GetNumOfLoopEdge() == 0 && GetNumOfCoupleOfVertexHaveMultipleEdge() == 0)
+            {
+                // Mọi đỉnh sẽ có bậc bằng nhau là k
+                int[] degrees = GetDegreesOfUndirectedGraph();
+
+                int min = degrees.Min();
+                int max = degrees.Max();
+
+                if (min == max && min == 2)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }
