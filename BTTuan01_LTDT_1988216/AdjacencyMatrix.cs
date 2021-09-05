@@ -33,6 +33,8 @@ namespace BTTuan01_LTDT_1988216
 
         public bool isUndirectedGraph()
         {
+            // @ Chức năng: có phải là đồ thị vô hướng hay không?
+
             // Kiểm tra tính đối xứng qua đường chéo chính
             bool isSymmetric = true;
             for(int i = 0; i < this.n - 1; i++)
@@ -49,112 +51,123 @@ namespace BTTuan01_LTDT_1988216
             return isSymmetric;
         }
 
-        public int countVertex()
+        public int CountVertex()
         {
+            // @ Chức năng: tính số lượng đỉnh trong đồ thị
+            // Số đỉnh là số dòng
             return this.n;
         }
 
-        public int iCountLoopEdge()
+        public int GetNumOfEdge()
         {
-            int iNumOfLoopEdge = 0;
-            // Đếm cạnh khuyên;
-            for(int i = 0; i < n; i++)
-            {
-                for(int j = 0; j < n; j++)
-                {
-                    if(Matrix[i,j] == 1 && i == j)
-                    {
-                        iNumOfLoopEdge++;
-                    }
-                }
-            }
+            // @ Chức năng: tính số lượng cạnh trong đồ thị
 
-            return iNumOfLoopEdge;
-        }
-
-        public int iGetMultipleEdge()
-        {
-            int iNumOfMultipleEdge = 0;
-            for (int i = 0; i < n; i++)
-            {
-                for (int j = 0; j < n; j++)
-                {
-                    if (Matrix[i, j] > 1 && i != j)
-                    {
-                        iNumOfMultipleEdge += Matrix[i,j];
-                    }
-                }
-            }
+            int sumOfDegree = 0;
+            // Áp dụng định lý handshaking
             if(isUndirectedGraph())
             {
-                iNumOfMultipleEdge /= 2;
-            }
-            return iNumOfMultipleEdge;
-        }
-
-        public int iGetTotalEdge()
-        {
-            // Số lượng cạnh khuyên
-            int iLoopEdge = iCountLoopEdge();
-            // Số lượng cạnh bội
-            int iNumOfMultipleEdge = iGetMultipleEdge();
-            // Số lượng cạnh đơn
-            int iNumOfEdge = 0;
-            // Tổng số cạnh
-            int iTotalEdge = 0;
-
-            for (int i = 0; i < n; i++)
-            {
-                for (int j = 0; j < n; j++)
+                // Nếu đồ thị là vô hướng
+                int[] degrees = GetDegreesOfUndirectedGraph();
+                for(int i = 0; i < degrees.Length; i++)
                 {
-                    if (Matrix[i, j] == 1 && i != j)
-                    {
-                        iNumOfEdge++;
-                    }
-                }
-            }
-
-            if (isUndirectedGraph())
-            {
-                // Nếu là đồ thị vô hướng
-                iNumOfEdge = iNumOfEdge / 2;
-            }
-
-            iTotalEdge = iNumOfEdge + iLoopEdge + iNumOfMultipleEdge;
-            return iTotalEdge;
-        }
-
-        public int iGetCoupleOfVertexHaveMultipleEdge()
-        {
-            int iNumOfVertexHaveMultipleEdge = 0;
-            if(isUndirectedGraph())
-            {
-                for (int i = 0; i < n; i++)
-                {
-                    for(int j = 0; j < n; j++)
-                    {
-                        if(Matrix[i,j] > 1 && i != j)
-                        {
-                            iNumOfVertexHaveMultipleEdge++;
-                        }
-                    }
+                    sumOfDegree += degrees[i];
                 }
             }
             else
             {
-                for(int i = 0; i < n; i++)
+                // Đồ thị có hướng
+                int[,] degrees = GetDegressOfDirectedGraph();
+                for (int i = 0; i < degrees.GetLength(0); i++)
                 {
-                    for(int j = 0; j < n; j++)
-                    {
-                        if(Matrix[i,j] == Matrix[j,i] && i != j)
-                        {
-                            iNumOfVertexHaveMultipleEdge++;
-                        }
-                    }
+                    sumOfDegree += degrees[i,0];
+                    sumOfDegree += degrees[i,1];
                 }
             }
-            iNumOfVertexHaveMultipleEdge /= 2;
-            return iNumOfVertexHaveMultipleEdge;
+            return sumOfDegree / 2;
+        }
+
+        public int GetNumOfLoopEdge()
+        {
+            // @ Trả về: tính số lượng cạnh khuyên
+            int numOfLoopEdge = 0;
+            // Đếm cạnh khuyên;
+            for(int i = 0; i < n; i++)
+            {
+                numOfLoopEdge += Matrix[i, i];
+            }
+
+            return numOfLoopEdge;
+        }
+
+        public int GetNumOfCoupleOfVertexHaveMultipleEdge()
+        {
+            // @ Chức năng: tính số lượng cặp đỉnh có cạnh bội
+            int numOfVertex = 0;
+
+            for (int i = 0; i < n - 1; i++)
+            {
+                for (int j = i + 1; j < n; j++)
+                {
+                    if(isUndirectedGraph())
+                    {
+                        if (Matrix[i, j] > 1) numOfVertex++;
+                    }
+                    else
+                    {
+                        if (Matrix[i, j] == 1 && Matrix[j, i] == 1) numOfVertex++;
+                    }
+                    
+                }
+            }
+            return numOfVertex;
+        }
+
+        public int GetIsolatedVertex()
+        {
+            // @ Chức năng: tính số đỉnh cô lập
+            int numOfIsolatedVertex = 0;
+            if(isUndirectedGraph())
+            {
+                int[] degrees = GetDegreesOfUndirectedGraph();
+                for(int i = 0; i < degrees.Length; i++)
+                {
+                    if (degrees[i] == 0) numOfIsolatedVertex++;
+                }
+            }
+            else
+            {
+                int[,] degrees = GetDegressOfDirectedGraph();
+                for (int i = 0; i < degrees.GetLength(0); i++)
+                {
+                    if (degrees[i,0] == 0 && degrees[i,1] == 0) numOfIsolatedVertex++;
+                }
+            }
+            return numOfIsolatedVertex;
+        }
+
+        public int GetPendantVertex()
+        {
+            // @ Chức năng: tính số đỉnh treo
+            int numOfPendantVertex = 0;
+            if (isUndirectedGraph())
+            {
+                int[] degrees = GetDegreesOfUndirectedGraph();
+                for (int i = 0; i < degrees.Length; i++)
+                {
+                    if (degrees[i] == 1) numOfPendantVertex++;
+                }
+            }
+            else
+            {
+                int[,] degrees = GetDegressOfDirectedGraph();
+                for (int i = 0; i < degrees.GetLength(0); i++)
+                {
+                    if ((degrees[i, 0] == 1 && degrees[i, 1] == 0)
+                        || (degrees[i, 0] == 0 && degrees[i, 1] == 1)
+                        ) numOfPendantVertex++;
+                }
+            }
+            return numOfPendantVertex;
         }
 
         public int[] GetDegreesOfUndirectedGraph()
@@ -210,6 +223,32 @@ namespace BTTuan01_LTDT_1988216
             }
 
             return degrees;
+        }
+
+        public string GetTypeOfGraph()
+        {
+            string resStr = "";
+            if(isUndirectedGraph())
+            {
+                if (GetNumOfLoopEdge() == 0 && GetNumOfCoupleOfVertexHaveMultipleEdge() == 0)
+                    resStr = "Don do thi";
+                else if(GetNumOfLoopEdge() == 0 && GetNumOfCoupleOfVertexHaveMultipleEdge() > 0)
+                    resStr = "Da do thi";
+                else if(GetNumOfLoopEdge() > 0)
+                    resStr = "Gia do thi";
+            }
+            else
+            {
+                if(GetNumOfCoupleOfVertexHaveMultipleEdge() == 0)
+                {
+                    resStr = "Do thi co huong";
+                }
+                else if(GetNumOfCoupleOfVertexHaveMultipleEdge() > 0)
+                {
+                    resStr = "Da do thi co huong";
+                }
+            }
+            return resStr;
         }
     }
 }
