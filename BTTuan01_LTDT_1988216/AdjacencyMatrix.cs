@@ -37,11 +37,11 @@ namespace BTTuan01_LTDT_1988216
 
             // Kiểm tra tính đối xứng qua đường chéo chính
             bool isSymmetric = true;
-            for(int i = 0; i < this.n - 1; i++)
+            for(int i = 0; i < n - 1; i++)
             {
-                for(int j = i + 1; j < this.n; j++)
+                for(int j = i + 1; j < n; j++)
                 {
-                    if(this.Matrix[i,j] != this.Matrix[j,i])
+                    if(Matrix[i,j] != Matrix[j,i])
                     {
                         isSymmetric = false;
                         break;
@@ -115,26 +115,6 @@ namespace BTTuan01_LTDT_1988216
                 numOfVertex /= 2;
             }
             
-
-            //if (isUndirectedGraph())
-            //{
-            //    for (int i = 0; i < n - 1; i++)
-            //    {
-            //        for (int j = i + 1; j < n; j++)
-            //        {
-            //            if (Matrix[i, j] > 1) numOfVertex++;
-            //        }
-            //    }
-            //}
-            //else
-            //{
-            //    for(int i = 0; i < n; i++) 
-            //        for(int j = 0; j < n; j++)
-            //        {
-                        
-            //        }
-            //}
-
             return numOfVertex;
         }
 
