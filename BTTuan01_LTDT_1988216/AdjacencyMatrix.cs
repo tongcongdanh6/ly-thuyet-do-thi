@@ -104,21 +104,37 @@ namespace BTTuan01_LTDT_1988216
             // @ Chức năng: tính số lượng cặp đỉnh có cạnh bội
             int numOfVertex = 0;
 
-            for (int i = 0; i < n - 1; i++)
-            {
-                for (int j = i + 1; j < n; j++)
+            for (int i = 0; i < n; i++)
+                for (int j = 0; j < n; j++)
                 {
-                    if(isUndirectedGraph())
-                    {
-                        if (Matrix[i, j] > 1) numOfVertex++;
-                    }
-                    else
-                    {
-                        if (Matrix[i, j] == 1 && Matrix[j, i] == 1) numOfVertex++;
-                    }
-                    
+                    if (Matrix[i, j] > 1) numOfVertex++;
                 }
+
+            if(isUndirectedGraph())
+            {
+                numOfVertex /= 2;
             }
+            
+
+            //if (isUndirectedGraph())
+            //{
+            //    for (int i = 0; i < n - 1; i++)
+            //    {
+            //        for (int j = i + 1; j < n; j++)
+            //        {
+            //            if (Matrix[i, j] > 1) numOfVertex++;
+            //        }
+            //    }
+            //}
+            //else
+            //{
+            //    for(int i = 0; i < n; i++) 
+            //        for(int j = 0; j < n; j++)
+            //        {
+                        
+            //        }
+            //}
+
             return numOfVertex;
         }
 
