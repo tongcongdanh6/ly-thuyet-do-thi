@@ -13,7 +13,7 @@ namespace BTTuan01_LTDT_1988216
         public void Run()
         {
             // Câu 2
-            string path1 = @"../../Cau2_testcase1.txt";
+            string path1 = @"../../Cau2_testcase3.txt";
 
             FileHandler fileHandleInstance = new FileHandler();
 

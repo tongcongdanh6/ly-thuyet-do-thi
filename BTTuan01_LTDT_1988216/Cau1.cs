@@ -13,7 +13,7 @@ namespace BTTuan01_LTDT_1988216
         public void Run()
         {
             // Câu 1
-            string path1 = @"../../Cau1_testcase2.txt";
+            string path1 = @"../../Cau1_testcase6.txt";
 
             FileHandler fileHandleInstance = new FileHandler();
 
@@ -62,7 +62,7 @@ namespace BTTuan01_LTDT_1988216
             else
             {
                 Console.WriteLine("(Bac vao - Bac ra) cua tung dinh:");
-                int[,] degrees = MatrixCau1.GetDegressOfDirectedGraph();
+                int[,] degrees = MatrixCau1.GetDegreesOfDirectedGraph();
                 for(int i = 0; i < degrees.GetLength(0); i++)
                 {
                     Console.Write("{0}({1}-{2}) ", i, degrees[i,1], degrees[i,0]);

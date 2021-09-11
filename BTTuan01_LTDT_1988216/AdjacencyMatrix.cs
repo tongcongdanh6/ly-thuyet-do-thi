@@ -76,7 +76,7 @@ namespace BTTuan01_LTDT_1988216
             else
             {
                 // Đồ thị có hướng
-                int[,] degrees = GetDegressOfDirectedGraph();
+                int[,] degrees = GetDegreesOfDirectedGraph();
                 for (int i = 0; i < degrees.GetLength(0); i++)
                 {
                     sumOfDegree += degrees[i,0];
@@ -132,7 +132,7 @@ namespace BTTuan01_LTDT_1988216
             }
             else
             {
-                int[,] degrees = GetDegressOfDirectedGraph();
+                int[,] degrees = GetDegreesOfDirectedGraph();
                 for (int i = 0; i < degrees.GetLength(0); i++)
                 {
                     if (degrees[i,0] == 0 && degrees[i,1] == 0) numOfIsolatedVertex++;
@@ -155,7 +155,7 @@ namespace BTTuan01_LTDT_1988216
             }
             else
             {
-                int[,] degrees = GetDegressOfDirectedGraph();
+                int[,] degrees = GetDegreesOfDirectedGraph();
                 for (int i = 0; i < degrees.GetLength(0); i++)
                 {
                     if ((degrees[i, 0] == 1 && degrees[i, 1] == 0)
@@ -192,7 +192,7 @@ namespace BTTuan01_LTDT_1988216
             return degrees;
         }
 
-        public int[,] GetDegressOfDirectedGraph()
+        public int[,] GetDegreesOfDirectedGraph()
         {
             int[,] degrees = new int[n, 2];
             for(int i = 0; i < n; i++)
@@ -296,7 +296,17 @@ namespace BTTuan01_LTDT_1988216
 
                 if (min == max && min == 2)
                 {
-                    return true;
+                    bool isIncidence = true;
+                    // Nếu mọi đỉnh có bậc bằng 2 thì đi kiểm tra tính liên thông
+                    for (int i = 0; i < n - 1; i++)
+                    {
+                        if (Matrix[i, i+1] == 0) isIncidence = false;
+                        break;
+                    }
+                    // Check đỉnh cuối và đỉnh đầu
+                    if (Matrix[n - 1, 0] == 0) isIncidence = false;
+
+                    return isIncidence;
                 }
             }
             return false;
